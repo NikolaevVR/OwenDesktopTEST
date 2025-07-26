@@ -4,6 +4,7 @@ import subprocess
 import os
 import logging
 from pywinauto import Application
+import pygetwindow as gw
 
 
 SCREENSHOT_DIR = "results"
@@ -44,9 +45,8 @@ def drag_and_drop(start_x, start_y, end_x, end_y, duration=0.5):
 def main():
     try:
         logger.info("Запуск Owen Logic...")
-        #subprocess.Popen([r"C:\Program Files\Owen\Owen Logic\ProgramRelayFBD.exe"], shell=True)
         app = Application(backend="uia").start(r"C:\Program Files\Owen\Owen Logic\ProgramRelayFBD.exe")
-        time.sleep(5)
+        time.sleep(7)
     except Exception as e:
         logger.info(f"Ошибка запуска: {e}")
         return
@@ -54,7 +54,8 @@ def main():
     # 2. Создание нового проекта
     try:
         logger.info("Создание проекта...")
-        pyautogui.hotkey('ctrl', 'n')
+        #pyautogui.hotkey('ctrl', 'n')
+        app.OwenLogic.type_keys('^n')
         time.sleep(2)
         search = find_element(f'{UI_DIR}/search_input.png')
         pyautogui.click(search.x, search.y)
